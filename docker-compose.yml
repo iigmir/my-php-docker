@@ -16,23 +16,24 @@ services:
         image: nginx:latest
         ports:
             - "8080:80"
-            - "443:443"
-        # build:
-        #     context: ./nginx
+            # - "443:443"
         volumes:
             - ./configs/nginx:/etc/nginx/conf.d
             - ./src:/var/www/html
         depends_on:
             - app
-        # networks:
-        #     - internal
+        networks:
+            - internal
     app:
-        build:
-            dockerfile: ./configs/php/Dockerfile
+        image: php:8.2-fpm
+        # https://stackoverflow.com/a/43290357/7162445
+        working_dir: "/var/www"
         volumes:
             - ./src:/var/www/html   
+        networks:
+            - internal
 
 networks:
     internal:
         name: internal
-        # driver: bridge
+
