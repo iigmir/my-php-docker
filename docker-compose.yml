@@ -1,16 +1,6 @@
 version: '3'
 
 services:
-    # api:
-    #     image: php:fpm-alpine
-    #     networks:
-    #         - internal
-    #     volumes:
-    #         # - /var/www/repo/vendor/
-    #         # - ./sites/${APP_SITE:-fyi}/api/.env.${APP_ENV:-local}:/var/www/.env
-    #         - ./app:/var/www/html
-    #     depends_on:
-    #         - nginx
     nginx:
         restart: always
         image: nginx:latest
