@@ -1,6 +1,14 @@
 version: '3'
 
 services:
+    app:
+        image: php:8.2-fpm
+        # https://stackoverflow.com/a/43290357/7162445
+        working_dir: "/var/www"
+        volumes:
+            - ./src:/var/www/html   
+        networks:
+            - internal
     nginx:
         restart: always
         image: nginx:latest
@@ -12,14 +20,6 @@ services:
             - ./src:/var/www/html
         depends_on:
             - app
-        networks:
-            - internal
-    app:
-        image: php:8.2-fpm
-        # https://stackoverflow.com/a/43290357/7162445
-        working_dir: "/var/www"
-        volumes:
-            - ./src:/var/www/html   
         networks:
             - internal
 
