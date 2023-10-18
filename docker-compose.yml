@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+    # api:
+    #     image: php:fpm-alpine
+    #     networks:
+    #         - internal
+    #     volumes:
+    #         # - /var/www/repo/vendor/
+    #         # - ./sites/${APP_SITE:-fyi}/api/.env.${APP_ENV:-local}:/var/www/.env
+    #         - ./app:/var/www/html
+    #     depends_on:
+    #         - nginx
+    nginx:
+        restart: always
+        image: nginx:latest
+        ports:
+            - "8080:80"
+            - "443:443"
+        # build:
+        #     context: ./nginx
+        volumes:
+            - ./configs/nginx:/etc/nginx/conf.d
+            - ./src:/var/www/html
+        depends_on:
+            - app
+        # networks:
+        #     - internal
+    app:
+        build:
+            dockerfile: ./configs/php/Dockerfile
+        volumes:
+            - ./src:/var/www/html   
+
+networks:
+    internal:
+        name: internal
+        # driver: bridge
